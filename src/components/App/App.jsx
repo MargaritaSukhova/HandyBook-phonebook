@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 // import { Container, Title, SubTitle } from '../App/App.styled';
 // import Loader from 'components/Loader/Loader';
 // import { Error } from 'components/Error/Error.styled';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import RegisterPage from 'pages/RegisterPage';
 import ContactsPage from 'pages/ContactsPage';
 import LoginPage from 'pages/LoginPage';
@@ -58,8 +58,8 @@ const App = () => {
               <PrivateRoute redirectTo="/login" component={<ContactsPage />} />
             }
           />
-          <Route path="*" element={<LoginPage />} />
         </Route>
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     )
     // <Container>
