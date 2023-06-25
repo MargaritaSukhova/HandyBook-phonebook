@@ -1,9 +1,20 @@
-import { Link } from 'react-router-dom';
+import { Box, Button } from '@mui/material';
+import { StyledNavLink } from './GoBackBtn.styled';
 
 export const GoBackBtn = () => {
   return (
-    <button>
-      <Link to="/">Go back</Link>
-    </button>
+    <Box
+      sx={{
+        marginTop: 8,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      <Button variant="contained">
+        {' '}
+        <StyledNavLink to="/">Go back</StyledNavLink>
+      </Button>
+    </Box>
   );
 };

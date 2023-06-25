@@ -20,7 +20,6 @@ export default function ContactsPage() {
   return (
     <>
       <ContactForm />
-      <SubTitle>Contacts</SubTitle>
       <Filter />
       {isLoading && <Loader />}
       {error && <Error>{error}</Error>}
