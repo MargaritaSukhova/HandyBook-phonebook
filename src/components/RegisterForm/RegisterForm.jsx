@@ -13,15 +13,43 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Copyright } from 'components/Copyright/Copyright';
 import { StyledNavLink } from './RegisterForm.styled';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
 
 const defaultTheme = createTheme();
+
+// function validateEmail(email) {
+//   var re = /\S+@\S+\.\S+/;
+//   if (email !== '') {
+//     re.test(email);
+//     return email;
+//   }
+// }
 
 export const RegisterForm = () => {
   const dispatch = useDispatch();
 
+  const validationSchema = yup.object({
+    email: yup
+      .string('Enter your email')
+      .email('Enter a valid email')
+      .required('Email is required'),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+    },
+    validationSchema: validationSchema,
+    onSubmit: values => {
+      // Handle Submit
+    },
+  });
+
   const handleSubmit = e => {
     e.preventDefault();
     const form = e.currentTarget;
+
     dispatch(
       register({
         name: form.elements.name.value,
@@ -76,6 +104,15 @@ export const RegisterForm = () => {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  inputProps={{ style: { textTransform: 'lowercase' } }}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.email}
+                  error={formik.touched.email && Boolean(formik.errors.email)}
+                  helperText={formik.touched.email && formik.errors.email}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>

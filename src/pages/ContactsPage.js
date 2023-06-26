@@ -1,21 +1,21 @@
-import { SubTitle } from 'components/App/App.styled';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchContacts } from 'redux/operations';
+import { selectError, selectIsLoading } from 'redux/selectors';
 import ContactForm from 'components/ContactForm/ContactForm';
 import ContactList from 'components/ContactList/ContactList';
 import { Error } from 'components/Error/Error.styled';
 import Filter from 'components/Filter/Filter';
 import Loader from 'components/Loader/Loader';
-import { useSelector } from 'react-redux';
-import { selectError, selectIsLoading } from 'redux/selectors';
 
 export default function ContactsPage() {
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
-  // const dispatch = useDispatch();
-  // const isLoading = useSelector(selectLoading);
+  const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(fetchTasks());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   return (
     <>

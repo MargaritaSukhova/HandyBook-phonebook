@@ -25,7 +25,10 @@ const ContactForm = () => {
     if (e.currentTarget.name === 'name') {
       setName(e.currentTarget.value);
     } else if (e.currentTarget.name === 'number') {
-      setNumber(e.currentTarget.value);
+      const regex = /^[0-9\b]+$/;
+      if (e.currentTarget.value === '' || regex.test(e.currentTarget.value)) {
+        setNumber(e.currentTarget.value);
+      }
     }
   };
 
@@ -82,6 +85,7 @@ const ContactForm = () => {
             sx={{ mt: 1 }}
           >
             <TextField
+              // inputProps={{ pattern: '[a-z]' }}
               value={name}
               onChange={handleInputChange}
               type="text"
@@ -103,11 +107,10 @@ const ContactForm = () => {
               // }}
               value={number}
               onChange={handleInputChange}
-              inputProps={{
-                inputMode: 'numeric',
-                pattern:
-                  '+?d{1,4}?[-.s]?(?d{1,3}?)?[-.s]?d{1,4}[-.s]?d{1,4}[-.s]?d{1,9}',
-              }}
+              // inputProps={{
+              //   inputMode: 'numeric',
+              //   pattern: '[0-9]*',
+              // }}
               type="tel"
               name="number"
               id="number"

@@ -1,6 +1,4 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { Block } from '../Filter/Filter.styled';
-import { Label, Input } from '../ContactForm/ContactForm.styled';
 import { selectFilter } from 'redux/selectors';
 import { changeFilter } from 'redux/filterSlice';
 import {
