@@ -29,11 +29,17 @@ const defaultTheme = createTheme();
 export const RegisterForm = () => {
   const dispatch = useDispatch();
 
+  const emailRegex = new RegExp(
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  );
+
   const validationSchema = yup.object({
     email: yup
-      .string('Enter your email')
-      .email('Enter a valid email')
-      .required('Email is required'),
+      .string()
+      .trim()
+      .required('Required')
+      .email('Invalid email')
+      .matches(emailRegex, 'Invalid email'),
   });
 
   const formik = useFormik({
@@ -56,7 +62,9 @@ export const RegisterForm = () => {
         email: form.elements.email.value,
         password: form.elements.password.value,
       })
-    );
+    )
+      .unwrap()
+      .then(() => {});
     form.reset();
   };
 

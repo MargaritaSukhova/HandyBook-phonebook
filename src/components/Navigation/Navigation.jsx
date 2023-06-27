@@ -10,7 +10,7 @@ export const Navigation = () => {
   return (
     <NavStyled>
       <NavLink to="/">
-        <Logo style={{ width: 40, height: 50 }} />
+        <Logo style={{ width: 50, height: 60 }} />
       </NavLink>
       {isLoggedIn && (
         <Button color="inherit">
