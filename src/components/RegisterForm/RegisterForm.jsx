@@ -37,7 +37,7 @@ export const RegisterForm = () => {
       .matches(emailRegex, 'Invalid email'),
     password: yup
       .string()
-      .required('Please Enter your password')
+      .required('Please enter your password')
       .matches(
         passwordRegex,
         'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'
