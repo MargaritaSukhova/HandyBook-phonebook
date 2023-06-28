@@ -1,5 +1,8 @@
 import { useDispatch } from 'react-redux';
-import { register } from 'redux/auth/operations';
+import { useNavigate } from 'react-router-dom';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+import { toast } from 'react-hot-toast';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -10,27 +13,14 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { register } from 'redux/auth/operations';
 import { Copyright } from 'components/Copyright/Copyright';
-import { StyledNavLink } from './RegisterForm.styled';
-import { useFormik } from 'formik';
-import * as yup from 'yup';
-
-const defaultTheme = createTheme();
-
-// function validateEmail(email) {
-//   var re = /\S+@\S+\.\S+/;
-//   if (email !== '') {
-//     re.test(email);
-//     return email;
-//   }
-// }
 
 export const RegisterForm = () => {
   const dispatch = useDispatch();
 
   const emailRegex = new RegExp(
-    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   );
 
   const validationSchema = yup.object({
@@ -47,9 +37,7 @@ export const RegisterForm = () => {
       email: '',
     },
     validationSchema: validationSchema,
-    onSubmit: values => {
-      // Handle Submit
-    },
+    // onSubmit: values => {},
   });
 
   const handleSubmit = e => {
@@ -64,114 +52,105 @@ export const RegisterForm = () => {
       })
     )
       .unwrap()
-      .then(() => {});
+      .then(response => {
+        toast.success(
+          `${response.user.name}, you have successfully registered!`
+        );
+      })
+      .catch(() =>
+        toast.error('Registration was unsuccessful, please try again')
+      );
+
     form.reset();
   };
 
+  const navigate = useNavigate();
+
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Register
-          </Typography>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Register
+        </Typography>
+        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                autoComplete="name"
+                name="name"
+                required
+                fullWidth
+                id="name"
+                label="Name"
+                autoFocus
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                inputProps={{ style: { textTransform: 'lowercase' } }}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.email}
+                error={formik.touched.email && Boolean(formik.errors.email)}
+                helperText={formik.touched.email && formik.errors.email}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="new-password"
+              />
+            </Grid>
+          </Grid>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
           >
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  autoComplete="name"
-                  name="name"
-                  required
-                  fullWidth
-                  id="name"
-                  label="Name"
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  inputProps={{ style: { textTransform: 'lowercase' } }}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.email}
-                  error={formik.touched.email && Boolean(formik.errors.email)}
-                  helperText={formik.touched.email && formik.errors.email}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                />
-              </Grid>
+            Register
+          </Button>
+          <Grid container justifyContent="flex-end">
+            <Grid item>
+              <Link
+                variant="body2"
+                sx={{ cursor: 'pointer' }}
+                onClick={() => {
+                  navigate('/login', { replace: true });
+                }}
+              >
+                {'Already have an account? Login'}
+              </Link>
             </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Register
-            </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="#" variant="body2">
-                  <StyledNavLink to="/login">
-                    Already have an account? Login
-                  </StyledNavLink>
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
+          </Grid>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
-      </Container>
-    </ThemeProvider>
+      </Box>
+      <Copyright sx={{ mt: 5 }} />
+    </Container>
   );
-  //   <form onSubmit={handleSubmit} autoComplete="off">
-  //     <label>
-  //       Username
-  //       <input type="text" name="name" />
-  //     </label>
-  //     <label>
-  //       Email
-  //       <input type="email" name="email" />
-  //     </label>
-  //     <label>
-  //       Password
-  //       <input type="password" name="password" minLength="7" />
-  //     </label>
-  //     <button type="submit">Register</button>
-  //   </form>
-  // );
 };

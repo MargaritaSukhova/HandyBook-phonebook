@@ -1,7 +1,7 @@
-import ContactListItem from '../ContactListItem/ContactListItem';
 import { useSelector } from 'react-redux';
 import { selectFilteredContacts } from 'redux/selectors';
 import { Box, Container, Grid } from '@mui/material';
+import ContactListItem from '../ContactListItem/ContactListItem';
 
 const ContactList = () => {
   const filteredContacts = useSelector(selectFilteredContacts);

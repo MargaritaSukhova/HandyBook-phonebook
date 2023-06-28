@@ -1,5 +1,4 @@
 import { Typography } from '@mui/material';
-
 import { StyledNavLink } from './Copyright.styled';
 
 export const Copyright = props => {

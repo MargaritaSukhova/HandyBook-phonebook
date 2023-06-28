@@ -6,15 +6,20 @@ import { persistor, store } from './redux/store';
 import App from 'components/App/App';
 import './index.css';
 import { PersistGate } from 'redux-persist/integration/react';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const defaultTheme = createTheme();
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </PersistGate>
+      <ThemeProvider theme={defaultTheme}>
+        <PersistGate loading={null} persistor={persistor}>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </PersistGate>
+      </ThemeProvider>
     </Provider>
   </React.StrictMode>
 );

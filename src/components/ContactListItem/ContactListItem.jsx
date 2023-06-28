@@ -1,3 +1,5 @@
+import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 import {
   Avatar,
   IconButton,
@@ -5,16 +7,9 @@ import {
   ListItemAvatar,
   ListItemText,
 } from '@mui/material';
-import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
-// import {
-//   ListItem,
-//   Text,
-//   DelBtn,
-// } from '../ContactListItem/ContactListItem.styled';
-import { deleteContact } from 'redux/operations';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
+import { deleteContact } from 'redux/operations';
 
 const ContactListItem = ({ id, name, number }) => {
   const dispatch = useDispatch();
@@ -45,15 +40,6 @@ const ContactListItem = ({ id, name, number }) => {
       <ListItemText primary={`${name}`} />
       <ListItemText primary={`${number}`} sx={{ textAlign: 'end' }} />
     </ListItem>
-
-    // <ListItem>
-    //   <Text>
-    //     {name}: {number}
-    //   </Text>
-    //   <DelBtn type="button" onClick={() => handleContactDelete(id)}>
-    //     Delete
-    //   </DelBtn>
-    // </ListItem>
   );
 };
 

@@ -12,7 +12,6 @@ export const GoBackBtn = () => {
       }}
     >
       <Button variant="contained">
-        {' '}
         <StyledNavLink to="/">Go back</StyledNavLink>
       </Button>
     </Box>

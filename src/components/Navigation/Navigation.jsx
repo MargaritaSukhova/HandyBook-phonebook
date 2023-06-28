@@ -1,8 +1,8 @@
 import { NavLink } from 'react-router-dom';
-import { ReactComponent as Logo } from 'images/logo.svg';
-import { useAuth } from 'hooks/useAuth';
 import { Button } from '@mui/material';
+import { useAuth } from 'hooks/useAuth';
 import { NavStyled, StyledNavLink } from './Navigation.styled';
+import { ReactComponent as Logo } from 'images/logo.svg';
 
 export const Navigation = () => {
   const { isLoggedIn } = useAuth();
