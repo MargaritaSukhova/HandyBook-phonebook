@@ -20,24 +20,37 @@ export const RegisterForm = () => {
   const dispatch = useDispatch();
 
   const emailRegex = new RegExp(
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  );
+
+  const passwordRegex = new RegExp(
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/
   );
 
   const validationSchema = yup.object({
+    name: yup.string().required('Please enter a username'),
     email: yup
       .string()
       .trim()
       .required('Required')
       .email('Invalid email')
       .matches(emailRegex, 'Invalid email'),
+    password: yup
+      .string()
+      .required('Please Enter your password')
+      .matches(
+        passwordRegex,
+        'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'
+      ),
   });
 
   const formik = useFormik({
     initialValues: {
+      name: '',
       email: '',
+      password: '',
     },
     validationSchema: validationSchema,
-    // onSubmit: values => {},
   });
 
   const handleSubmit = e => {
@@ -94,6 +107,14 @@ export const RegisterForm = () => {
                 id="name"
                 label="Name"
                 autoFocus
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.name}
+                error={formik.touched.name && Boolean(formik.errors.name)}
+                helperText={formik.touched.name && formik.errors.name}
+                InputLabelProps={{
+                  shrink: true,
+                }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -124,6 +145,16 @@ export const RegisterForm = () => {
                 type="password"
                 id="password"
                 autoComplete="new-password"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.password}
+                error={
+                  formik.touched.password && Boolean(formik.errors.password)
+                }
+                helperText={formik.touched.password && formik.errors.password}
+                InputLabelProps={{
+                  shrink: true,
+                }}
               />
             </Grid>
           </Grid>
