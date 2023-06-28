@@ -32,7 +32,7 @@ export const RegisterForm = () => {
     email: yup
       .string()
       .trim()
-      .required('Required')
+      .required('Please enter email')
       .email('Invalid email')
       .matches(emailRegex, 'Invalid email'),
     password: yup
