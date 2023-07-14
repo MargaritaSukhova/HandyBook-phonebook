@@ -39,6 +39,10 @@ const ContactForm = () => {
       return toast.error(`${name} is already in contacts list!`);
     }
 
+    if (name.trim() === '' || number === '') {
+      return toast.error(`Please fill both fields name and number`);
+    }
+
     const newContact = {
       id: nanoid(),
       name,
