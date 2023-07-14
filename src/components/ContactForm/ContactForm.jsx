@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from '@reduxjs/toolkit';
+import { toast } from 'react-hot-toast';
 import {
   Box,
   Button,
@@ -35,7 +36,7 @@ const ContactForm = () => {
     e.preventDefault();
 
     if (checkContacts(name)) {
-      return alert(`${name} is already in contacts list!`);
+      return toast.error(`${name} is already in contacts list!`);
     }
 
     const newContact = {
