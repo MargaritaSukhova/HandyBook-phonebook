@@ -20,7 +20,6 @@ export const register = createAsyncThunk(
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
-      // return rejectWithValue(error.response.data.message);
     }
   }
 );
