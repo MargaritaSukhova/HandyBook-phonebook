@@ -4,9 +4,7 @@
 
 ## About this project
 
-HandyBook is a SPA for comfort storing your contacs. The site allows:
-* user registration and authorization
-* saving, deleteting contacts
+HandyBook is a single-page application designed for convenient contact storage, providing user registration and authorization as well as the ability to save and delete contacts.
 
 ## Technologies and libraries used to create the project:
 
